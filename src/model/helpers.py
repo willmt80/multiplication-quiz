@@ -16,7 +16,7 @@ def get_equation_list(times_table: list[Equation], count: int):
         if (len(times_table_copy) == 0):
             times_table_copy = times_table[:]
         index = random.randint(0, len(times_table_copy) - 1)
-        equation_list.append()
+        equation_list.append(times_table_copy[index])
         del times_table_copy[index]
         i += 1
     return equation_list
