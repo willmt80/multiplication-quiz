@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtGui import QRegExpValidator, QFont
 from PyQt5.QtCore import QRegExp, Qt
 
 class GamePage(QWidget):
@@ -8,21 +8,27 @@ class GamePage(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.label = QLabel(self)
-        self.label.move(120, 100)
+        layout = QGridLayout()
+        self.question_count = QLabel(self)
+        layout.addWidget(self.question_count, 0, 0)
 
-        self.button = QPushButton(self)
-        self.button.setText("Submit Answer")
-        self.button.move(80, 160)
-        self.button.setDisabled(True)
+        self.label = QLabel(self)
+        self.label.setFont(QFont('Arial', 20))
+        layout.addWidget(self.label, 1, 0, alignment=Qt.AlignCenter)
 
         validator = QRegExpValidator(QRegExp(r'[0-9]+'))
 
         self.input = QLineEdit(self)
         self.input.setValidator(validator)
-        self.input.move(80, 130)
         self.input.setFocus()
         self.input.textChanged.connect(self.disable_button)
+        layout.addWidget(self.input, 2, 0)
+        self.setLayout(layout)
+
+        self.button = QPushButton(self)
+        self.button.setText("Submit Answer")
+        self.button.setDisabled(True)
+        layout.addWidget(self.button, 3, 0)
 
     def disable_button(self):
         if len(self.input.text()) > 0:
