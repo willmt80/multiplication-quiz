@@ -1,15 +1,15 @@
 from PyQt5.QtWidgets import *
-from model.classes.game_state import GameState
-from model.helpers import create_times_table, get_equation_list
 import sys
 
 from view.start_menu import StartMenu
 from view.game_page import GamePage
+from view.answers_page import AnswersPage
+from view.view_helpers import get_new_game, get_equation_label
 
 class App(QMainWindow):
     def __init__(self):
         super(App, self).__init__()
-        self.setGeometry(200, 200, 400, 300)
+        self.setGeometry(200, 200, 500, 300)
         self.setWindowTitle("Multiplication table")
         self.max = 9
         self.num_questions = 25
@@ -19,8 +19,10 @@ class App(QMainWindow):
         self.stacked_widget = QStackedWidget(self)
         self.start_menu = StartMenu()
         self.game_page = GamePage()
+        self.answers_page = AnswersPage()
         self.stacked_widget.addWidget(self.start_menu)
         self.stacked_widget.addWidget(self.game_page)
+        self.stacked_widget.addWidget(self.answers_page)
         self.stacked_widget.setCurrentIndex(0)
         self.setCentralWidget(self.stacked_widget)
 
@@ -45,12 +47,17 @@ class App(QMainWindow):
     
     def make_guess(self):
         self.game_state.make_guess(int(self.game_page.input.text()))
-        self.game_page.question_count.setText(self.get_current_question_count())
-        self.game_page.label.setText(self.get_current_equation_label())
-        self.game_page.input.setText("")
+        if self.game_state.do_equations_remain():
+            self.game_page.question_count.setText(self.get_current_question_count())
+            self.game_page.label.setText(self.get_current_equation_label())
+            self.game_page.input.setText("")
+        else:
+            self.answers_page.display_answers(self.game_state.answers)
+            self.stacked_widget.setCurrentIndex(2)
+
     
     def start_game(self):
-        self.game_state = get_new_game(self.max, 20)
+        self.game_state = get_new_game(self.max, self.num_questions)
         self.game_page.button.clicked.connect(self.make_guess)
         self.game_page.question_count.setText(self.get_current_question_count())
         self.game_page.label.setText(self.get_current_equation_label())
@@ -65,13 +72,6 @@ class App(QMainWindow):
         button = self.sender()
         if button.isChecked():
             self.num_questions = button.num
-
-def get_new_game(max: int, count: int):
-    times_table = create_times_table(max)
-    return GameState(get_equation_list(times_table, count))
-
-def get_equation_label(left: int, right: int):
-    return str(left) + " x " + str(right)
 
 def start_app():
     app = QApplication([])

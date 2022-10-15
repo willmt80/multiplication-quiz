@@ -19,16 +19,18 @@ class GamePage(QWidget):
         validator = QRegExpValidator(QRegExp(r'[0-9]+'))
 
         self.input = QLineEdit(self)
+        self.input.setMaxLength(3)
         self.input.setValidator(validator)
         self.input.setFocus()
         self.input.textChanged.connect(self.disable_button)
         layout.addWidget(self.input, 2, 0)
-        self.setLayout(layout)
 
         self.button = QPushButton(self)
         self.button.setText("Submit Answer")
         self.button.setDisabled(True)
         layout.addWidget(self.button, 3, 0)
+
+        self.setLayout(layout)
 
     def disable_button(self):
         if len(self.input.text()) > 0:
