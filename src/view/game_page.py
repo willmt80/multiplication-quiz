@@ -8,13 +8,18 @@ class GamePage(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        layout = QGridLayout()
+        layout = QVBoxLayout()
         self.question_count = QLabel(self)
-        layout.addWidget(self.question_count, 0, 0)
+        self.question_count.setFont(QFont('Arial', 20))
+        layout.addWidget(self.question_count)
+
+        self.time_label = QLabel(self)
+        self.time_label.setFont(QFont('Arial', 30))
+        layout.addWidget(self.time_label)
 
         self.label = QLabel(self)
-        self.label.setFont(QFont('Arial', 20))
-        layout.addWidget(self.label, 1, 0, alignment=Qt.AlignCenter)
+        self.label.setFont(QFont('Arial', 40))
+        layout.addWidget(self.label, alignment=Qt.AlignCenter)
 
         validator = QRegExpValidator(QRegExp(r'[0-9]+'))
 
@@ -23,12 +28,13 @@ class GamePage(QWidget):
         self.input.setValidator(validator)
         self.input.setFocus()
         self.input.textChanged.connect(self.disable_button)
-        layout.addWidget(self.input, 2, 0)
+        self.input.setFont(QFont('Arial', 20))
+        layout.addWidget(self.input)
 
         self.button = QPushButton(self)
         self.button.setText("Submit Answer")
         self.button.setDisabled(True)
-        layout.addWidget(self.button, 3, 0)
+        layout.addWidget(self.button)
 
         self.setLayout(layout)
 
