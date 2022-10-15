@@ -24,9 +24,13 @@ class GameState:
         return self.current < self.count
 
     def get_cur_left(self):
+        if self.current >= len(self.equation_list):
+            raise Exception("All equations have been answered")
         return self.equation_list[self.current].left
 
     def get_cur_right(self):
+        if self.current >= len(self.equation_list):
+            raise Exception("All equations have been answered")
         return self.equation_list[self.current].right
 
     def get_answer_left(self, index):

@@ -9,6 +9,7 @@ class GamePage(QWidget):
 
     def init_ui(self):
         layout = QVBoxLayout()
+        
         self.question_count = QLabel(self)
         self.question_count.setFont(QFont('Arial', 20))
         layout.addWidget(self.question_count)
@@ -22,7 +23,6 @@ class GamePage(QWidget):
         layout.addWidget(self.label, alignment=Qt.AlignCenter)
 
         validator = QRegExpValidator(QRegExp(r'[0-9]+'))
-
         self.input = QLineEdit(self)
         self.input.setMaxLength(3)
         self.input.setValidator(validator)

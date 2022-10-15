@@ -8,6 +8,7 @@ class StartMenu(QWidget):
     
     def initUI(self):
         layout = QVBoxLayout()
+        
         self.max_label = QLabel(self)
         self.max_label.setText("Largest Factor:")
         self.max_label.adjustSize()
