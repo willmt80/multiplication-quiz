@@ -2,10 +2,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QTime, QTimer
 import sys
 
-from view.start_menu import StartMenu
-from view.game_page import GamePage
-from view.answers_page import AnswersPage
-from view.view_helpers import get_new_game, get_equation_label
+from .start_menu import StartMenu
+from .game_page import GamePage
+from .answers_page import AnswersPage
+from .view_helpers import get_new_game, get_equation_label
 
 class App(QMainWindow):
     def __init__(self):

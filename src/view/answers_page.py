@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QFont
-from model.classes.answer import Answer
-from view.view_helpers import get_answer_label
+from src.model.classes.answer import Answer
+from .view_helpers import get_answer_label
 
 class AnswersPage(QWidget):
     def __init__(self):
