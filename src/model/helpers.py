@@ -3,8 +3,8 @@ from .classes.equation import Equation
 
 def create_times_table(max: int) -> list[Equation]:
     table = []
-    for i in range(max + 1):
-        for j in range(max + 1):
+    for i in range(1, max + 1):
+        for j in range(1, max + 1):
             table.append(Equation(i, j))
     return table
 

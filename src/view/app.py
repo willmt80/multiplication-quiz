@@ -13,7 +13,7 @@ class App(QMainWindow):
         self.setGeometry(200, 200, 700, 700)
         self.setWindowTitle("Multiplication table")
         self.max = 9
-        self.num_questions = 25
+        self.num_questions = 50
         self.init_ui()
     
     def init_ui(self):
@@ -24,17 +24,13 @@ class App(QMainWindow):
         self.setCentralWidget(self.stacked_widget)
 
         self.start_menu.start_button.clicked.connect(self.start_game)
-        self.start_menu.nine_button.toggled.connect(self.on_click_max)
-        self.start_menu.nine_button.setChecked(self.max == 9)
-        self.start_menu.twelve_button.toggled.connect(self.on_click_max)
-        self.start_menu.twelve_button.setChecked(self.max == 12)
+        self.start_menu.max_slider.valueChanged.connect(self.set_max)
+        self.start_menu.max_slider.setValue(self.max)
+        self.start_menu.max_value.setText(str(self.max))
 
-        self.start_menu.short_quiz_button.toggled.connect(self.on_click_question)
-        self.start_menu.short_quiz_button.setChecked(self.num_questions == 25)
-        self.start_menu.mid_quiz_button.toggled.connect(self.on_click_question)
-        self.start_menu.mid_quiz_button.setChecked(self.num_questions == 50)
-        self.start_menu.long_quiz_button.toggled.connect(self.on_click_question)
-        self.start_menu.long_quiz_button.setChecked(self.num_questions == 100)
+        self.start_menu.question_slider.valueChanged.connect(self.set_question_amount)
+        self.start_menu.question_slider.setValue(self.num_questions // 10)
+        self.start_menu.question_value.setText(str(self.num_questions))
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.timer_event)
@@ -71,15 +67,15 @@ class App(QMainWindow):
         self.game_page.time_label.setText(self.time.toString("mm:ss"))
         self.stacked_widget.setCurrentIndex(1)
     
-    def on_click_max(self):
-        button = self.sender()
-        if button.isChecked():
-            self.max = button.max
+    def set_max(self, value):
+        self.max = value
+        self.start_menu.max_value.setText(str(value))
+        self.start_menu.max_value.adjustSize()
 
-    def on_click_question(self):
-        button = self.sender()
-        if button.isChecked():
-            self.num_questions = button.num
+    def set_question_amount(self, value):
+        self.num_questions = value * 10
+        self.start_menu.question_value.setText(str(value * 10))
+        self.start_menu.question_value.adjustSize()
 
     def timer_event(self):
         self.time = self.time.addSecs(1)

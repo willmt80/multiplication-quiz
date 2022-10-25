@@ -11,23 +11,23 @@ class TestHelpers(unittest.TestCase):
         """
         Test that the tuple list is the correct length
         """
-        self.assertEqual(len(test_list_1), 36)
-        self.assertEqual(len(test_list_2), 100)
+        self.assertEqual(len(test_list_1), 25)
+        self.assertEqual(len(test_list_2), 81)
 
         """
         Test that the tuple list has the correct values
         """
-        for i in range(6):
+        for i in range(1, 5):
             with self.subTest(i=i):
                 message = "at index " + str(i)
-                self.assertEqual(test_list_1[i].left, i//6, message)
-                self.assertEqual(test_list_1[i].right, i%6, message)
+                self.assertEqual(test_list_1[i].left, i//5 + 1, message)
+                self.assertEqual(test_list_1[i].right, i%5 + 1, message)
 
-        for i in range(10):
+        for i in range(1, 9):
             with self.subTest(i=i):
                 message = "at index " + str(i)
-                self.assertEqual(test_list_2[i].left, i//10, message)
-                self.assertEqual(test_list_2[i].right, i%10, message)
+                self.assertEqual(test_list_2[i].left, i//9 + 1, message)
+                self.assertEqual(test_list_2[i].right, i%9 + 1, message)
 
     def test_get_equation_list(self):
         test_list_1 = get_equation_list(create_times_table(5), 45)
